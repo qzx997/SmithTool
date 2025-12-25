@@ -1,0 +1,11 @@
+! Example S1P file for SmithTool testing
+! 50 ohm antenna with resonance at 1 GHz
+# GHz S MA R 50
+! freq     mag      phase
+0.8        0.35    120.0
+0.9        0.20     60.0
+0.95       0.08     25.0
+1.0        0.02      5.0
+1.05       0.10    -30.0
+1.1        0.22    -65.0
+1.2        0.38   -110.0

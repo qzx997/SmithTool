@@ -1,0 +1,8 @@
+/home/qzx/prodev/Qucs_S/SmithTool/build/CMakeFiles/SmithTool.dir
+/home/qzx/prodev/Qucs_S/SmithTool/build/CMakeFiles/edit_cache.dir
+/home/qzx/prodev/Qucs_S/SmithTool/build/CMakeFiles/rebuild_cache.dir
+/home/qzx/prodev/Qucs_S/SmithTool/build/CMakeFiles/list_install_components.dir
+/home/qzx/prodev/Qucs_S/SmithTool/build/CMakeFiles/install.dir
+/home/qzx/prodev/Qucs_S/SmithTool/build/CMakeFiles/install/local.dir
+/home/qzx/prodev/Qucs_S/SmithTool/build/CMakeFiles/install/strip.dir
+/home/qzx/prodev/Qucs_S/SmithTool/build/CMakeFiles/SmithTool_autogen.dir

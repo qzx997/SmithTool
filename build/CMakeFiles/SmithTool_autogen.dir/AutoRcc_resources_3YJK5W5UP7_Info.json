@@ -1,0 +1,23 @@
+{
+	"BUILD_DIR" : "/home/qzx/prodev/Qucs_S/SmithTool/build/SmithTool_autogen",
+	"CMAKE_BINARY_DIR" : "/home/qzx/prodev/Qucs_S/SmithTool/build",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/qzx/prodev/Qucs_S/SmithTool/build",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/qzx/prodev/Qucs_S/SmithTool",
+	"CMAKE_SOURCE_DIR" : "/home/qzx/prodev/Qucs_S/SmithTool",
+	"INCLUDE_DIR" : "/home/qzx/prodev/Qucs_S/SmithTool/build/SmithTool_autogen/include",
+	"INPUTS" : 
+	[
+		"/home/qzx/prodev/Qucs_S/SmithTool/resources/styles/light.qss",
+		"/home/qzx/prodev/Qucs_S/SmithTool/resources/styles/dark.qss"
+	],
+	"LOCK_FILE" : "/home/qzx/prodev/Qucs_S/SmithTool/build/CMakeFiles/SmithTool_autogen.dir/AutoRcc_resources_3YJK5W5UP7_Lock.lock",
+	"MULTI_CONFIG" : false,
+	"OPTIONS" : [ "-name", "resources" ],
+	"OUTPUT_CHECKSUM" : "3YJK5W5UP7",
+	"OUTPUT_NAME" : "qrc_resources.cpp",
+	"RCC_EXECUTABLE" : "/usr/lib/qt6/libexec/rcc",
+	"RCC_LIST_OPTIONS" : [ "--list" ],
+	"SETTINGS_FILE" : "/home/qzx/prodev/Qucs_S/SmithTool/build/CMakeFiles/SmithTool_autogen.dir/AutoRcc_resources_3YJK5W5UP7_Used.txt",
+	"SOURCE" : "/home/qzx/prodev/Qucs_S/SmithTool/resources/resources.qrc",
+	"VERBOSITY" : 0
+}

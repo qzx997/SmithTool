@@ -1,0 +1,72 @@
+# SmithTool Windows Build Configuration
+# This file contains instructions and scripts for building on Windows
+
+## Prerequisites
+
+1. Install Qt 6.x for Windows (MSVC or MinGW)
+   - Download from: https://www.qt.io/download-qt-installer
+   - Install Qt 6.5 or later with MSVC 2019/2022 64-bit or MinGW 64-bit
+
+2. Install CMake 3.16 or later
+   - Download from: https://cmake.org/download/
+
+3. Install Visual Studio 2019/2022 (for MSVC build) or MinGW (for MinGW build)
+
+## Build Steps
+
+### Using Visual Studio (MSVC)
+
+```powershell
+# Set Qt path (adjust to your installation)
+$env:CMAKE_PREFIX_PATH = "C:\Qt\6.5.0\msvc2019_64"
+
+# Create build directory
+mkdir build-windows
+cd build-windows
+
+# Generate Visual Studio solution
+cmake .. -G "Visual Studio 17 2022" -A x64
+
+# Build Release
+cmake --build . --config Release
+
+# The executable will be at: build-windows\Release\SmithTool.exe
+```
+
+### Using MinGW
+
+```powershell
+# Set Qt path (adjust to your installation)
+$env:CMAKE_PREFIX_PATH = "C:\Qt\6.5.0\mingw_64"
+$env:PATH = "C:\Qt\Tools\mingw1120_64\bin;$env:PATH"
+
+# Create build directory
+mkdir build-mingw
+cd build-mingw
+
+# Generate Makefiles
+cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release
+
+# Build
+mingw32-make -j4
+
+# The executable will be at: build-mingw\SmithTool.exe
+```
+
+## Deployment
+
+After building, use Qt's windeployqt tool to collect dependencies:
+
+```powershell
+# Navigate to build output directory
+cd build-windows\Release  # or build-mingw
+
+# Run windeployqt
+windeployqt --release SmithTool.exe
+
+# This will copy all required Qt DLLs to the same directory
+```
+
+## Creating Installer
+
+Use NSIS or Inno Setup with the provided installer script.
