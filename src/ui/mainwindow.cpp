@@ -130,6 +130,9 @@ void MainWindow::setupMenus()
     m_qCirclesAction->setChecked(false);
     viewMenu->addAction(m_qCirclesAction);
     
+    m_configureQCirclesAction = new QAction(tr("Configure Q &Values..."), this);
+    viewMenu->addAction(m_configureQCirclesAction);
+    
     viewMenu->addSeparator();
     viewMenu->addAction(m_componentDock->toggleViewAction());
     viewMenu->addAction(m_impedanceDock->toggleViewAction());
@@ -176,6 +179,7 @@ void MainWindow::connectSignals()
     connect(m_vswrAction, &QAction::toggled, this, &MainWindow::onToggleVSWR);
     connect(m_labelsAction, &QAction::toggled, this, &MainWindow::onToggleLabels);
     connect(m_qCirclesAction, &QAction::toggled, this, &MainWindow::onToggleQCircles);
+    connect(m_configureQCirclesAction, &QAction::triggered, this, &MainWindow::onConfigureQCircles);
     
     // Help actions
     connect(m_aboutAction, &QAction::triggered, this, &MainWindow::onAbout);
@@ -356,6 +360,58 @@ void MainWindow::onToggleLabels(bool show)
 void MainWindow::onToggleQCircles(bool show)
 {
     m_smithChart->setShowQCircles(show);
+}
+
+void MainWindow::onConfigureQCircles()
+{
+    // Get current Q values as string
+    std::vector<double> currentQ = {0.5, 1.0, 2.0, 5.0};  // Default values
+    
+    QString currentStr;
+    for (size_t i = 0; i < currentQ.size(); ++i) {
+        if (i > 0) currentStr += ", ";
+        currentStr += QString::number(currentQ[i]);
+    }
+    
+    bool ok;
+    QString input = QInputDialog::getText(
+        this,
+        tr("Configure Q Circles"),
+        tr("Enter Q values (comma-separated):"),
+        QLineEdit::Normal,
+        currentStr,
+        &ok
+    );
+    
+    if (!ok || input.isEmpty()) return;
+    
+    // Parse input
+    std::vector<double> qValues;
+    QStringList parts = input.split(',', Qt::SkipEmptyParts);
+    
+    for (const QString& part : parts) {
+        bool valid;
+        double val = part.trimmed().toDouble(&valid);
+        if (valid && val > 0) {
+            qValues.push_back(val);
+        }
+    }
+    
+    if (qValues.empty()) {
+        QMessageBox::warning(this, tr("Invalid Input"),
+            tr("No valid Q values entered. Please enter positive numbers separated by commas."));
+        return;
+    }
+    
+    // Apply Q values
+    m_smithChart->setQValues(qValues);
+    
+    // Enable Q circles if not already enabled
+    if (!m_qCirclesAction->isChecked()) {
+        m_qCirclesAction->setChecked(true);
+    }
+    
+    statusBar()->showMessage(tr("Q circles configured: %1 values").arg(qValues.size()), 3000);
 }
 
 void MainWindow::onAddSeriesR()

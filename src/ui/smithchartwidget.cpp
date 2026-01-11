@@ -645,25 +645,36 @@ void SmithChartWidget::drawQCircles(QPainter& painter)
     for (double q : m_qValues) {
         QCircle qCircle(q);
         
-        // Convert Q circle center and radius to screen coordinates
-        QPointF screenCenter = gammaToScreen(qCircle.center);
+        // Upper Q-circle (positive reactance region)
+        QPointF screenCenterUpper = gammaToScreen(qCircle.centerUpper);
         double screenRadius = qCircle.radius * m_radius;
         
-        // Clip to unit circle
-        QPainterPath circlePath;
-        circlePath.addEllipse(circleRect(screenCenter, screenRadius));
+        QPainterPath upperPath;
+        upperPath.addEllipse(circleRect(screenCenterUpper, screenRadius));
         
         QPainterPath unitPath;
         unitPath.addEllipse(circleRect(m_center, m_radius));
         
-        painter.drawPath(circlePath.intersected(unitPath));
+        painter.drawPath(upperPath.intersected(unitPath));
         
-        // Draw label
+        // Lower Q-circle (negative reactance region)
+        QPointF screenCenterLower = gammaToScreen(qCircle.centerLower);
+        
+        QPainterPath lowerPath;
+        lowerPath.addEllipse(circleRect(screenCenterLower, screenRadius));
+        
+        painter.drawPath(lowerPath.intersected(unitPath));
+        
+        // Draw label on upper circle
         painter.setPen(QColor(0, 150, 100));
-        QPointF labelPos = gammaToScreen(Complex(qCircle.center.real() + qCircle.radius * 0.7, 0.1));
-        if (SmithMath::isInsideUnitCircle(Complex(qCircle.center.real() + qCircle.radius * 0.7, 0.1))) {
-            painter.drawText(labelPos, QString("Q=%1").arg(q, 0, 'g', 2));
+        // Label near the intersection with real axis
+        Complex labelGamma = Complex(0.5, 0.5 / q);  // Approximate intersection point
+        if (SmithMath::isInsideUnitCircle(labelGamma)) {
+            QPointF labelPos = gammaToScreen(labelGamma);
+            painter.drawText(labelPos + QPointF(5, -2), QString("Q=%1").arg(q, 0, 'g', 2));
         }
+        
+        painter.setPen(pen);  // Reset pen for next circle
     }
 }
 

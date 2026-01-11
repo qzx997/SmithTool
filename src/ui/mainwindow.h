@@ -51,6 +51,7 @@ private slots:
     void onToggleVSWR(bool show);
     void onToggleLabels(bool show);
     void onToggleQCircles(bool show);
+    void onConfigureQCircles();
     
     // Element toolbar slots
     void onAddSeriesR();
@@ -130,6 +131,7 @@ private:
     QAction* m_vswrAction;
     QAction* m_labelsAction;
     QAction* m_qCirclesAction;
+    QAction* m_configureQCirclesAction;
     QAction* m_matchingWizardAction;
     QAction* m_aboutAction;
     QAction* m_exportSpiceAction;

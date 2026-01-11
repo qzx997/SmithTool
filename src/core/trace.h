@@ -141,11 +141,17 @@ private:
 
 /**
  * @brief Q-circle parameters
+ * 
+ * Constant-Q circles on Smith Chart: Q = |X|/R
+ * In Γ-plane, there are two circles (upper and lower):
+ * - Center: (0, ±1/Q)  
+ * - Radius: sqrt(1 + 1/Q²)
  */
 struct QCircle {
     double q;           // Quality factor
-    Complex center;     // Center in Gamma plane
-    double radius;      // Radius in Gamma plane
+    Complex centerUpper;  // Center of upper circle in Gamma plane
+    Complex centerLower;  // Center of lower circle in Gamma plane
+    double radius;      // Radius in Gamma plane (same for both)
     QColor color;
     bool visible;
     
@@ -154,12 +160,16 @@ struct QCircle {
         , color(Qt::darkGreen)
         , visible(true)
     {
-        // Q circle: center = (1/(1+Q²), 0), radius = Q/(1+Q²)
-        double q2 = q * q;
-        double denom = 1.0 + q2;
-        center = Complex(1.0 / denom, 0.0);
-        radius = q / denom;
+        // Correct Q-circle formula for Smith Chart:
+        // Center: (0, ±1/Q), Radius: sqrt(1 + 1/Q²)
+        double invQ = 1.0 / q;
+        centerUpper = Complex(0.0, invQ);
+        centerLower = Complex(0.0, -invQ);
+        radius = std::sqrt(1.0 + invQ * invQ);
     }
+    
+    // Backwards compatibility
+    Complex center;  // Legacy: set to upper for single-circle drawing
 };
 
 } // namespace SmithTool
